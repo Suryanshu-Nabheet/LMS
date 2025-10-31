@@ -1,0 +1,130 @@
+import { redirect } from "next/navigation"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
+import { Sidebar } from "@/components/Sidebar"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ExportButton } from "@/components/ExportButton"
+import { Download } from "lucide-react"
+
+async function getExportData(userId: string) {
+  try {
+    const courses = await prisma.course.findMany({
+      where: { instructorId: userId },
+      include: {
+        enrollments: {
+          include: {
+            user: {
+              select: {
+                name: true,
+                email: true,
+              },
+            },
+          },
+        },
+        reviews: true,
+      },
+    })
+
+    const enrollmentsData = courses.flatMap((course) =>
+      course.enrollments.map((enrollment) => ({
+        courseTitle: course.title,
+        studentName: enrollment.user.name,
+        studentEmail: enrollment.user.email,
+        progress: enrollment.progress,
+        completed: enrollment.completed ? "Yes" : "No",
+        enrolledDate: enrollment.createdAt.toISOString(),
+      }))
+    )
+
+    const coursesData = courses.map((course) => ({
+      title: course.title,
+      category: course.category,
+      enrollments: course.enrollments.length,
+      rating: course.reviews.length > 0
+        ? course.reviews.reduce((acc, r) => acc + r.rating, 0) / course.reviews.length
+        : 0,
+      reviews: course.reviews.length,
+      published: course.published ? "Yes" : "No",
+      createdAt: course.createdAt.toISOString(),
+    }))
+
+    return {
+      enrollments: enrollmentsData,
+      courses: coursesData,
+    }
+  } catch (error) {
+    console.error("Error fetching export data:", error)
+    return {
+      enrollments: [],
+      courses: [],
+    }
+  }
+}
+
+export default async function ExportPage() {
+  const session = await getServerSession(authOptions)
+
+  if (!session || session.user.role !== "INSTRUCTOR") {
+    redirect("/auth/login")
+  }
+
+  const exportData = await getExportData(session.user.id)
+
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar role="INSTRUCTOR" />
+      <div className="flex-1 p-6 sm:p-8 lg:p-12">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
+          Export Data
+        </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>Enrollments Export</span>
+                <Download className="h-5 w-5 text-gray-400" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-gray-600">
+                Export all student enrollments with progress data.
+              </p>
+              <p className="text-xs text-gray-500">
+                {exportData.enrollments.length} enrollments available
+              </p>
+              <ExportButton
+                data={exportData.enrollments}
+                filename="enrollments"
+                label="Export Enrollments"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>Courses Export</span>
+                <Download className="h-5 w-5 text-gray-400" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-gray-600">
+                Export course performance data and analytics.
+              </p>
+              <p className="text-xs text-gray-500">
+                {exportData.courses.length} courses available
+              </p>
+              <ExportButton
+                data={exportData.courses}
+                filename="courses"
+                label="Export Courses"
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  )
+}

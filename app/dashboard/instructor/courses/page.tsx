@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Sidebar } from "@/components/Sidebar"
+import { Sidebar } from "@/components/layout/Sidebar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -53,7 +53,7 @@ export default async function InstructorCoursesPage() {
           <Card>
             <CardContent className="p-12 text-center">
               <p className="text-gray-600 mb-4">
-                You haven't created any courses yet.
+                You haven&apos;t created any courses yet.
               </p>
               <Link href="/dashboard/instructor/create">
                 <Button>Create Your First Course</Button>
@@ -65,7 +65,7 @@ export default async function InstructorCoursesPage() {
             {courses.map((course) => {
               const rating =
                 course.reviews.length > 0
-                  ? course.reviews.reduce((acc, r) => acc + r.rating, 0) /
+                  ? course.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) /
                     course.reviews.length
                   : 0
 

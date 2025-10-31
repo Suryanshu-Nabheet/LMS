@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { users, generateId } from "@/lib/store"
+import { users, generateId } from "@/lib/data/store"
 import bcrypt from "bcryptjs"
 
 export async function POST(req: Request) {

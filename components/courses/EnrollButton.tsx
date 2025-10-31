@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2 } from "lucide-react"
 import { toast } from "@/lib/toast"
-import { LoadingSpinner } from "@/components/LoadingSpinner"
+import { LoadingSpinner } from "@/components/shared/LoadingSpinner"
 
 interface EnrollButtonProps {
   courseId: string

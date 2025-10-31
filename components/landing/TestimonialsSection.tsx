@@ -52,7 +52,7 @@ export function TestimonialsSection() {
                   />
                 ))}
               </div>
-              <p className="text-gray-700 mb-4">"{testimonial.content}"</p>
+              <p className="text-gray-700 mb-4">&quot;{testimonial.content}&quot;</p>
               <div>
                 <p className="font-semibold text-[#1E293B]">
                   {testimonial.name}

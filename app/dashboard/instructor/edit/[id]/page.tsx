@@ -2,8 +2,8 @@ import { redirect, notFound } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Sidebar } from "@/components/Sidebar"
-import { EditCourseForm } from "@/components/EditCourseForm"
+import { Sidebar } from "@/components/layout/Sidebar"
+import { EditCourseForm } from "@/components/courses/EditCourseForm"
 
 async function getCourse(courseId: string, userId: string) {
   try {

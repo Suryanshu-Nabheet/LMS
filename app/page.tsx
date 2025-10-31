@@ -1,13 +1,13 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import { CourseCard } from "@/components/CourseCard"
+import { CourseCard } from "@/components/courses/CourseCard"
 import { prisma } from "@/lib/prisma"
-import { HeroSection } from "@/components/HeroSection"
-import { StatsSection } from "@/components/StatsSection"
-import { TestimonialsSection } from "@/components/TestimonialsSection"
-import FeaturesSection from "@/components/FeaturesSection"
-import WorldMapSection from "@/components/WorldMapSection"
+import { HeroSection } from "@/components/landing/HeroSection"
+import { StatsSection } from "@/components/landing/StatsSection"
+import { TestimonialsSection } from "@/components/landing/TestimonialsSection"
+import FeaturesSection from "@/components/landing/FeaturesSection"
+import WorldMapSection from "@/components/landing/WorldMapSection"
 
 async function getFeaturedCourses() {
   try {
@@ -33,7 +33,7 @@ async function getFeaturedCourses() {
       ...course,
       rating:
         course.reviews.length > 0
-          ? course.reviews.reduce((acc, r) => acc + r.rating, 0) /
+          ? course.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) /
             course.reviews.length
           : 0,
       totalReviews: course.reviews.length,

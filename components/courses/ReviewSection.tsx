@@ -9,7 +9,7 @@ import { Star } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "@/lib/toast"
-import { LoadingSpinner } from "@/components/LoadingSpinner"
+import { LoadingSpinner } from "@/components/shared/LoadingSpinner"
 
 interface Review {
   id: string

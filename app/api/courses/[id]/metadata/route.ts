@@ -25,11 +25,11 @@ export async function GET(
       return NextResponse.json({ error: "Course not found" }, { status: 404 })
     }
 
-    const rating =
-      course.reviews.length > 0
-        ? course.reviews.reduce((acc, r) => acc + r.rating, 0) /
-          course.reviews.length
-        : 0
+      const rating =
+        course.reviews.length > 0
+          ? course.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) /
+            course.reviews.length
+          : 0
 
     return NextResponse.json({
       "@context": "https://schema.org",

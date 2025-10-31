@@ -22,10 +22,10 @@ import {
   ChevronDown,
   ChevronUp
 } from "lucide-react"
-import { EnrollButton } from "@/components/EnrollButton"
-import { ReviewSection } from "@/components/ReviewSection"
-import { CourseVideoPlayer } from "@/components/CourseVideoPlayer"
-import { ExpandableSection } from "@/components/ExpandableSection"
+import { EnrollButton } from "@/components/courses/EnrollButton"
+import { ReviewSection } from "@/components/courses/ReviewSection"
+import { CourseVideoPlayer } from "@/components/courses/CourseVideoPlayer"
+import { ExpandableSection } from "@/components/courses/ExpandableSection"
 
 async function getCourse(slug: string) {
   try {

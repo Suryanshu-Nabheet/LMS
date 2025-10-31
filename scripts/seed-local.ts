@@ -1,4 +1,4 @@
-import { users, courses, lessons, enrollments, reviews, generateId } from "../lib/store"
+import { users, courses, lessons, enrollments, reviews, generateId } from "../lib/data/store"
 import bcrypt from "bcryptjs"
 
 async function hashPassword(password: string): Promise<string> {

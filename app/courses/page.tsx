@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma"
-import { CourseCard } from "@/components/CourseCard"
+import { CourseCard } from "@/components/courses/CourseCard"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { CourseFilters } from "@/components/CourseFilters"
-import { Pagination } from "@/components/Pagination"
+import { CourseFilters } from "@/components/courses/CourseFilters"
+import { Pagination } from "@/components/shared/Pagination"
 
 const COURSES_PER_PAGE = 12
 
@@ -70,7 +70,7 @@ async function getCourses(searchParams: {
         ...course,
         rating:
           course.reviews.length > 0
-            ? course.reviews.reduce((acc, r) => acc + r.rating, 0) /
+            ? course.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) /
               course.reviews.length
             : 0,
         totalReviews: course.reviews.length,

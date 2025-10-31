@@ -2,9 +2,9 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Sidebar } from "@/components/Sidebar"
+import { Sidebar } from "@/components/layout/Sidebar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ExportButton } from "@/components/ExportButton"
+import { ExportButton } from "@/components/dashboard/ExportButton"
 import { Download } from "lucide-react"
 
 async function getExportData(userId: string) {
@@ -42,7 +42,7 @@ async function getExportData(userId: string) {
       category: course.category,
       enrollments: course.enrollments.length,
       rating: course.reviews.length > 0
-        ? course.reviews.reduce((acc, r) => acc + r.rating, 0) / course.reviews.length
+        ? course.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / course.reviews.length
         : 0,
       reviews: course.reviews.length,
       published: course.published ? "Yes" : "No",

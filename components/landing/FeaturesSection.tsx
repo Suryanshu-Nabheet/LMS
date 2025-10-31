@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import createGlobe from "cobe"
 import { useEffect, useRef } from "react"
@@ -140,7 +141,7 @@ export const SkeletonOne = () => {
 
 export const SkeletonThree = () => {
   return (
-    <a
+    <Link
       href="/courses"
       className="relative flex gap-10 h-full group/image"
     >
@@ -152,7 +153,7 @@ export const SkeletonThree = () => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 

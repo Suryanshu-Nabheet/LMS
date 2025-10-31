@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { BookOpen, User, LogOut } from "lucide-react"
-import { SearchBar } from "@/components/SearchBar"
+import { SearchBar } from "@/components/shared/SearchBar"
 
 export function Navbar() {
   const { data: session } = useSession()

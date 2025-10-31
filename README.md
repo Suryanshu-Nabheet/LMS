@@ -1,190 +1,247 @@
 # CourseX - Learning Management System
 
-A full-featured Learning Management System (LMS) platform built with Next.js 14, TypeScript, Prisma, and PostgreSQL. CourseX allows instructors to create and publish courses while students can browse, enroll, and learn from these courses.
+<div align="center">
+  <h3>A modern, full-featured Learning Management System built with Next.js 15, TypeScript, and Tailwind CSS</h3>
+  <p>Designed for scalability, maintainability, and an exceptional developer experience</p>
+</div>
 
-## 🚀 Features
+## ✨ Features
 
-### For Students
-- Browse and search courses
+### 🎓 For Students
+- Browse and search courses with advanced filtering
 - Filter by category, difficulty, and sort by rating/popularity
-- Enroll in courses (free for MVP)
-- Track learning progress
-- Course player with video lessons
-- Leave reviews and ratings for enrolled courses
+- Free course enrollment (no payment required)
+- Interactive course player with video lessons
+- Track learning progress with detailed analytics
+- Submit reviews and ratings for enrolled courses
+- Responsive design for all devices
 
-### For Instructors
-- Create and manage courses
-- Build curriculum with multiple lessons
+### 👨‍🏫 For Instructors
+- Create and manage courses with rich content
+- Build comprehensive curriculum with multiple lessons
 - Add video URLs and resources to lessons
-- Publish/unpublish courses
-- View analytics (enrollments, reviews, ratings)
-- Dashboard with course statistics
+- Publish/unpublish courses with one click
+- View detailed analytics (enrollments, reviews, ratings)
+- Export course data (CSV)
+- Dashboard with comprehensive course statistics
 
-### Platform Features
+### 🏢 Platform Features
 - Role-based authentication (Student/Instructor)
 - Google OAuth + Email/Password login
+- Beautiful, modern UI with Framer Motion animations
+- Coursera-inspired course detail pages
+- Auto-generated course slugs
+- Local JSON storage (no database setup required)
+- Progress tracking and completion certificates
 - Responsive design with Tailwind CSS
-- Modern UI with Framer Motion animations
-- Course slug generation
-- Progress tracking
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Database**: PostgreSQL with Prisma ORM
+- **Database**: Local JSON Storage (Prisma-ready for PostgreSQL)
 - **Authentication**: NextAuth.js (Google + Email/Password)
 - **UI Components**: Radix UI + Custom Components
 - **Animations**: Framer Motion
 - **State Management**: React Hooks
+- **Form Handling**: React Hook Form
+- **Validation**: Zod
 
-## 📋 Prerequisites
+## 📁 Project Structure
+
+This codebase follows a **feature-based architecture** for optimal organization and scalability:
+
+```
+LMS/
+├── app/                    # Next.js App Router
+│   ├── (routes)/          # Application routes
+│   │   ├── auth/         # Authentication pages
+│   │   ├── courses/      # Course pages
+│   │   ├── dashboard/     # Dashboard pages
+│   │   └── api/          # API routes
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Landing page
+│
+├── components/             # React components (organized by feature)
+│   ├── landing/          # Landing page sections
+│   ├── courses/           # Course components
+│   ├── dashboard/        # Dashboard components
+│   ├── layout/           # Layout components
+│   ├── shared/           # Shared components
+│   └── ui/               # UI primitives
+│
+├── lib/                   # Utilities and libraries
+│   ├── data/             # Data layer (local storage)
+│   ├── auth.ts           # Authentication config
+│   └── utils.ts          # Helper functions
+│
+├── types/                 # TypeScript types
+├── data/                  # JSON data files
+└── scripts/               # Utility scripts
+```
+
+📖 **For detailed structure documentation, see [STRUCTURE.md](./STRUCTURE.md)**
+
+## 🚀 Quick Start
+
+### Prerequisites
 
 - Node.js 18+ and npm/yarn
-- PostgreSQL database (local or hosted like Supabase)
-- Google OAuth credentials (optional, for Google login)
+- (Optional) PostgreSQL for production
 
-## 🚀 Getting Started
+### Installation
 
-### 1. Clone the repository
-
+1. **Clone the repository**
 ```bash
 git clone <your-repo-url>
 cd LMS
 ```
 
-### 2. Install dependencies
-
+2. **Install dependencies**
 ```bash
 npm install
-# or
-yarn install
 ```
 
-### 3. Set up environment variables
+3. **Set up environment variables**
 
-Create a `.env` file in the root directory. **IMPORTANT:** You need a real database connection string!
-
-#### Quick Setup with Supabase (Recommended - Free):
-
-1. Sign up at [supabase.com](https://supabase.com)
-2. Create a new project
-3. Go to **Settings** → **Database**
-4. Copy the **Connection string** (URI format)
-5. Replace `[YOUR-PASSWORD]` with your database password
-
+Create a `.env` file:
 ```env
-# Database - Use your Supabase connection string
-DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@db.xxxxx.supabase.co:5432/postgres"
+NEXTAUTH_SECRET=your-secret-key-here
+NEXTAUTH_URL=http://localhost:3000
 
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-key-here-generate-with-openssl-rand-base64-32"
-
-# Google OAuth (Optional)
-GOOGLE_CLIENT_ID="your-google-client-id"
-GOOGLE_CLIENT_SECRET="your-google-client-secret"
+# Optional: For Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 ```
 
-**For local PostgreSQL:** If you have PostgreSQL installed locally, create the database first:
-```bash
-createdb coursex
-```
-Then use: `DATABASE_URL="postgresql://postgres:your_password@localhost:5432/coursex?schema=public"`
-
-**To generate `NEXTAUTH_SECRET`:**
+Generate a secret:
 ```bash
 openssl rand -base64 32
 ```
 
-**📖 See `DATABASE_SETUP.md` for detailed setup instructions.**
-
-### 4. Set up the database
-
+4. **Seed the database**
 ```bash
-# Push Prisma schema to database
-npm run db:push
-
-# Generate Prisma Client
-npx prisma generate
-
-# (Optional) Seed the database with sample data
 npm run db:seed
 ```
 
-### 5. Run the development server
-
+5. **Start the development server**
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## 📁 Project Structure
-
+6. **Open your browser**
 ```
-LMS/
-├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes
-│   ├── auth/              # Authentication pages
-│   ├── courses/           # Course pages
-│   ├── dashboard/         # Dashboard pages
-│   └── layout.tsx         # Root layout
-├── components/            # React components
-│   ├── ui/                # Reusable UI components
-│   └── ...               # Feature components
-├── lib/                   # Utility functions
-│   ├── auth.ts           # NextAuth configuration
-│   ├── prisma.ts         # Prisma client
-│   └── utils.ts          # Helper functions
-├── prisma/               # Prisma schema and migrations
-│   ├── schema.prisma     # Database schema
-│   └── seed.ts          # Seed script
-└── types/                # TypeScript type definitions
+http://localhost:3000
 ```
-
-## 🗄️ Database Schema
-
-### Key Models
-
-- **User**: Students and Instructors with role-based access
-- **Course**: Course information with instructor relation
-- **Lesson**: Individual lessons within a course
-- **Enrollment**: Student enrollments with progress tracking
-- **Review**: Course reviews and ratings
-
-## 🔐 Authentication
-
-The app supports two authentication methods:
-
-1. **Email/Password**: Users can register with email and password
-2. **Google OAuth**: Users can sign in with their Google account
-
-Both methods support role selection during registration (Student or Instructor).
 
 ## 📝 Sample Accounts
 
 After running the seed script, you can use these test accounts:
 
-**Instructors:**
-- Email: `instructor1@example.com` / Password: `password123`
-- Email: `instructor2@example.com` / Password: `password123`
+**Instructor:**
+- Email: `suryanshu@coursex.com` / Password: `password123`
 
 **Students:**
-- Email: `student1@example.com` / Password: `password123`
-- Email: `student2@example.com` / Password: `password123`
+- Email: `john@example.com` / Password: `password123`
+- Email: `jane@example.com` / Password: `password123`
 
-## 🎨 UI/UX Features
+## 🎨 Design System
 
-- Clean, modern design inspired by Coursera
-- Responsive layout for all screen sizes
-- Smooth animations with Framer Motion
-- Accessible components with Radix UI
-- Consistent color scheme:
-  - Primary Blue: `#2563EB`
-  - Dark Text: `#1E293B`
-  - Light Background: `#F8FAFC`
+CourseX uses a modern, clean design system:
+
+- **Primary Color**: Blue (#2563EB)
+- **Typography**: Inter font family
+- **Spacing**: Consistent Tailwind spacing scale
+- **Components**: Custom components built on Radix UI primitives
+- **Animations**: Smooth Framer Motion transitions
+
+## 📚 Key Features
+
+### Landing Page
+- Hero section with call-to-action
+- Statistics showcase
+- Featured courses grid
+- Interactive world map visualization
+- Feature highlights section
+- Student testimonials
+- Call-to-action section
+
+### Course Management
+- Beautiful course detail pages (Coursera-inspired)
+- Expandable lesson sections
+- Video player integration
+- Course reviews and ratings
+- Enrollment tracking
+- Progress visualization
+
+### Dashboard
+- Student dashboard with enrolled courses
+- Instructor dashboard with analytics
+- Course creation and editing
+- Export functionality
+- Progress tracking
+
+## 🔧 Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run db:seed      # Seed local database
+```
+
+## 📦 Dependencies
+
+### Core
+- `next` - React framework
+- `react` & `react-dom` - UI library
+- `typescript` - Type safety
+
+### UI & Styling
+- `tailwindcss` - Utility-first CSS
+- `framer-motion` - Animation library
+- `lucide-react` - Icon library
+- `@radix-ui/*` - Accessible UI primitives
+
+### Data & Auth
+- `next-auth` - Authentication
+- `bcryptjs` - Password hashing
+- `zod` - Schema validation
+
+### Forms & State
+- `react-hook-form` - Form handling
+- `zustand` - State management (optional)
+
+## 🏗️ Architecture Highlights
+
+### Feature-Based Organization
+Components are organized by feature/domain for better maintainability:
+- `components/landing/` - All landing page sections
+- `components/courses/` - All course-related components
+- `components/dashboard/` - Dashboard-specific components
+
+### Barrel Exports
+Each feature folder has an `index.ts` for clean imports:
+```typescript
+import { CourseCard, EnrollButton } from "@/components/courses"
+```
+
+### Data Layer
+Centralized data access in `lib/data/`:
+- `store.ts` - Low-level CRUD operations
+- `local-db.ts` - Prisma-like interface
+
+### Type Safety
+Types organized by domain in `types/` directory
+
+## 📖 Documentation
+
+- [STRUCTURE.md](./STRUCTURE.md) - Detailed project structure
+- [DATABASE_SETUP.md](./DATABASE_SETUP.md) - Database setup guide
+- [LOCAL_STORAGE.md](./LOCAL_STORAGE.md) - Local storage documentation
+- [QUICK_START.md](./QUICK_START.md) - Quick start guide
 
 ## 🚢 Deployment
 
@@ -195,36 +252,31 @@ After running the seed script, you can use these test accounts:
 3. Add environment variables in Vercel dashboard
 4. Deploy!
 
-Make sure to:
-- Set up PostgreSQL database (e.g., Supabase, Neon, or Railway)
-- Update `DATABASE_URL` in environment variables
-- Configure `NEXTAUTH_URL` to your production domain
-
-## 🔮 Future Enhancements
-
-- Payment integration (Stripe)
-- Video upload functionality
-- Advanced analytics
-- Discussion forums
-- Certificates
-- Email notifications
-- Advanced search with filters
-- Wishlist functionality
-- Course recommendations
-
-## 📄 License
-
-This project is open source and available under the MIT License.
+**Environment Variables:**
+- `NEXTAUTH_SECRET`
+- `NEXTAUTH_URL` (your production domain)
+- `GOOGLE_CLIENT_ID` (optional)
+- `GOOGLE_CLIENT_SECRET` (optional)
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome!
+This is an open-source project. Contributions are welcome!
 
-## 📧 Support
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-For support, please open an issue in the repository.
+## 📄 License
+
+MIT License - feel free to use this project for learning and building your own LMS!
+
+## 🙏 Acknowledgments
+
+- Design inspiration from Coursera
+- UI components based on shadcn/ui
+- Built with Next.js and TypeScript
 
 ---
 
-Built with ❤️ using Next.js and TypeScript
-
+**Made with ❤️ by the CourseX Team**

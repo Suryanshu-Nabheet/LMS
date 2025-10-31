@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { CoursePlayer } from "@/components/CoursePlayer"
+import { CoursePlayer } from "@/components/courses/CoursePlayer"
 
 async function getCourse(courseId: string, userId: string) {
   try {
@@ -30,7 +30,7 @@ async function getCourse(courseId: string, userId: string) {
       },
     })
 
-    return enrollment?.course
+      return (enrollment as any)?.course
   } catch (error) {
     console.error("Error fetching course for learning:", error)
     return null
@@ -59,7 +59,7 @@ export default async function LearnCoursePage({
   }
 
   const lessonId = lesson || course.lessons[0]?.id
-  const currentLesson = course.lessons.find((l) => l.id === lessonId) || course.lessons[0]
+  const currentLesson = (course.lessons as any[]).find((l: any) => l.id === lessonId) || course.lessons[0]
 
   if (!currentLesson) {
     return (

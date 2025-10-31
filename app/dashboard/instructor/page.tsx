@@ -2,12 +2,12 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Sidebar } from "@/components/Sidebar"
+import { Sidebar } from "@/components/layout/Sidebar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { BookOpen, Users, TrendingUp, Plus } from "lucide-react"
-import { EmptyState } from "@/components/EmptyState"
+import { EmptyState } from "@/components/shared/EmptyState"
 
 async function getInstructorStats(userId: string) {
   try {
@@ -169,7 +169,7 @@ export default async function InstructorDashboard() {
                   const rating =
                     course.reviews.length > 0
                       ? course.reviews.reduce(
-                          (acc, r) => acc + r.rating,
+                          (acc: number, r: any) => acc + r.rating,
                           0
                         ) / course.reviews.length
                       : 0

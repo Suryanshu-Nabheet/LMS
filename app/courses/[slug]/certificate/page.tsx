@@ -2,7 +2,7 @@ import { redirect, notFound } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Certificate } from "@/components/Certificate"
+import { Certificate } from "@/components/courses/Certificate"
 
 async function getEnrollment(slug: string, userId: string) {
   try {
@@ -31,7 +31,7 @@ async function getEnrollment(slug: string, userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: { name: true },
-    })
+    }) as { name: string } | null
 
     return {
       course,

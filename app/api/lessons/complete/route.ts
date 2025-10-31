@@ -48,21 +48,22 @@ export async function POST(req: Request) {
     }
 
     // Calculate progress based on lessons (simplified - in production, track individual lesson completion)
-    const totalLessons = enrollment.course.lessons.length
+    const enrollmentData = enrollment as any
+    const totalLessons = enrollmentData.course?.lessons?.length || 0
     // For now, just increment progress by a fixed amount
     // In production, you'd track which specific lessons are completed
 
-    const newProgress = Math.min(enrollment.progress + Math.floor(100 / totalLessons), 100)
+    const newProgress = Math.min((enrollmentData.progress || 0) + Math.floor(100 / totalLessons), 100)
 
-    await prisma.enrollment.update({
-      where: {
-        id: enrollment.id,
-      },
-      data: {
-        progress: newProgress,
-        completed: newProgress >= 100,
-      },
-    })
+      await prisma.enrollment.update({
+        where: {
+          id: enrollmentData.id,
+        },
+        data: {
+          progress: newProgress,
+          completed: newProgress >= 100,
+        },
+      })
 
     return NextResponse.json({ success: true, progress: newProgress })
   } catch (error) {

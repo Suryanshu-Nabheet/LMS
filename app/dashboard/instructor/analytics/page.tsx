@@ -2,10 +2,10 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Sidebar } from "@/components/Sidebar"
+import { Sidebar } from "@/components/layout/Sidebar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { AnalyticsChart } from "@/components/AnalyticsChart"
-import { ExportButton } from "@/components/ExportButton"
+import { AnalyticsChart } from "@/components/dashboard/AnalyticsChart"
+import { ExportButton } from "@/components/dashboard/ExportButton"
 
 async function getAnalytics(userId: string) {
   try {
@@ -17,14 +17,14 @@ async function getAnalytics(userId: string) {
       },
     })
 
-    const totalEnrollments = courses.reduce((acc, c) => acc + c.enrollments.length, 0)
+    const totalEnrollments = courses.reduce((acc: number, c: any) => acc + c.enrollments.length, 0)
     const totalRevenue = 0 // Placeholder for future payment integration
     const averageRating =
       courses.length > 0
-        ? courses.reduce((acc, c) => {
+        ? courses.reduce((acc: number, c: any) => {
             const courseRating =
               c.reviews.length > 0
-                ? c.reviews.reduce((rAcc, r) => rAcc + r.rating, 0) /
+                ? c.reviews.reduce((rAcc: number, r: any) => rAcc + r.rating, 0) /
                   c.reviews.length
                 : 0
             return acc + courseRating
@@ -72,7 +72,7 @@ export default async function AnalyticsPage() {
       title: course.title,
       enrollments: course.enrollments.length,
       rating: course.reviews.length > 0
-        ? course.reviews.reduce((acc: number, r) => acc + r.rating, 0) / course.reviews.length
+        ? course.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / course.reviews.length
         : 0,
       reviews: course.reviews.length,
     }))

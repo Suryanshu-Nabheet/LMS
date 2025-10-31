@@ -2,13 +2,13 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Sidebar } from "@/components/Sidebar"
+import { Sidebar } from "@/components/layout/Sidebar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
 import { Play, Clock, Award } from "lucide-react"
-import { EmptyState } from "@/components/EmptyState"
+import { EmptyState } from "@/components/shared/EmptyState"
 
 async function getEnrollments(userId: string) {
   try {

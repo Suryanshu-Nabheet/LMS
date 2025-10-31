@@ -26,11 +26,11 @@ async function getExportData(userId: string) {
       },
     })
 
-    const enrollmentsData = courses.flatMap((course) =>
-      course.enrollments.map((enrollment) => ({
+    const enrollmentsData = courses.flatMap((course: any) =>
+      course.enrollments.map((enrollment: any) => ({
         courseTitle: course.title,
-        studentName: enrollment.user.name,
-        studentEmail: enrollment.user.email,
+        studentName: enrollment.user?.name || "Student",
+        studentEmail: enrollment.user?.email || "",
         progress: enrollment.progress,
         completed: enrollment.completed ? "Yes" : "No",
         enrolledDate: enrollment.createdAt.toISOString(),
